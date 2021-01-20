@@ -1,12 +1,12 @@
 package com.ercarts.springboot.demo.model;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
 /**
  * @author dkyryk
  */
-@Data
+@Value
 @Builder
 public class JavaStats {
     int processors;

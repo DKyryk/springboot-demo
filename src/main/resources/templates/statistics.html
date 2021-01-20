@@ -1,0 +1,15 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+</head>
+<body>
+<ul>
+    <li>Available processors: <span style="bold" th:text="${stats.processors}">2</span></li>
+    <li>Total memory: <span th:text="${stats.totalMemory}">200</span>B</li>
+    <li>Available memory: <span th:text="${stats.availableMemory}">50</span>B</li>
+    <li>Max memory: <span th:text="${stats.maxMemory}">300</span>B</li>
+</ul>
+
+</body>
+</html>

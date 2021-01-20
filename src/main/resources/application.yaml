@@ -1,9 +1,18 @@
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 server:
   port: 8000
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
 server:
   port: 9000
+---
+server:
+  compression:
+    enabled: true
+    minResponseSize: 100

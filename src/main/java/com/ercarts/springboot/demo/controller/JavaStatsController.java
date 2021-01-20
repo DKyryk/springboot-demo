@@ -1,6 +1,6 @@
 package com.ercarts.springboot.demo.controller;
 
-import com.ercarts.springboot.demo.model.JavaStats;
+import com.ercarts.springboot.demo.service.JavaStatsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +15,15 @@ public class JavaStatsController {
 
     public static final String STATISTICS_VIEW_PAGE = "statistics";
 
+    private final JavaStatsService javaStatsService;
+
+    public JavaStatsController(JavaStatsService javaStatsService) {
+        this.javaStatsService = javaStatsService;
+    }
+
     @GetMapping
     public String calculateStats(Model model) {
-        Runtime runtime = Runtime.getRuntime();
-        model.addAttribute("stats", JavaStats.builder()
-                .processors(runtime.availableProcessors())
-                .availableMemory(runtime.freeMemory())
-                .maxMemory(runtime.maxMemory())
-                .totalMemory(runtime.totalMemory())
-                .build());
+        model.addAttribute("stats", javaStatsService.getStatistics());
         return STATISTICS_VIEW_PAGE;
     }
 }

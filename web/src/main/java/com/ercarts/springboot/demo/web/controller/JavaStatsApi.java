@@ -1,7 +1,7 @@
-package com.ercarts.springboot.demo.controller;
+package com.ercarts.springboot.demo.web.controller;
 
-import com.ercarts.springboot.demo.model.JavaStats;
-import com.ercarts.springboot.demo.service.JavaStatsService;
+import com.ercarts.springboot.demo.web.model.JavaStats;
+import com.ercarts.springboot.demo.web.service.JavaStatsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

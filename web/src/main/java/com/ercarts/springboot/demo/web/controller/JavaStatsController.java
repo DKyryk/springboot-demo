@@ -1,6 +1,6 @@
-package com.ercarts.springboot.demo.controller;
+package com.ercarts.springboot.demo.web.controller;
 
-import com.ercarts.springboot.demo.service.JavaStatsService;
+import com.ercarts.springboot.demo.web.service.JavaStatsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

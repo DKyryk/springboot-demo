@@ -1,4 +1,4 @@
-package com.ercarts.springboot.demo;
+package com.ercarts.springboot.demo.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

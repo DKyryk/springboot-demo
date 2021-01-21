@@ -1,4 +1,4 @@
-package com.ercarts.springboot.demo.model;
+package com.ercarts.springboot.demo.web.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

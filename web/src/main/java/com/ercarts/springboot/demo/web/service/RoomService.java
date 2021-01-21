@@ -1,10 +1,10 @@
-package com.ercarts.springboot.demo.service;
+package com.ercarts.springboot.demo.web.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.ercarts.springboot.demo.model.Room;
+import com.ercarts.springboot.demo.web.model.Room;
 import org.springframework.stereotype.Service;
 
 /**

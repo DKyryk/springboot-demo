@@ -1,6 +1,6 @@
-package com.ercarts.springboot.demo.service;
+package com.ercarts.springboot.demo.web.service;
 
-import com.ercarts.springboot.demo.model.JavaStats;
+import com.ercarts.springboot.demo.web.model.JavaStats;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,6 +1,7 @@
 package com.ercarts.springboot.demo.commandline;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +34,30 @@ public class CommandLineApplication {
             Optional.ofNullable(response.getBody())
                     .ifPresent(value -> log.info("Response received {}", value));
         };
+    }
+
+    @Bean
+    public CommandLineRunner runner() {
+        return args -> {
+            log.info("Second runner");
+            IntStream.rangeClosed(1, 100)
+                    .forEach(number -> log.info(resolveFizzBuzzLabel(number)));
+        };
+    }
+
+    private String resolveFizzBuzzLabel(int number) {
+        StringBuilder result = new StringBuilder();
+        if (number % 3 == 0) {
+            result.append("Fizz");
+        }
+        if (number % 5 == 0) {
+            result.append("Buzz");
+        }
+        if (result.length() == 0) {
+            result.append(number);
+        }
+
+        return result.toString();
     }
 
     public static void main(String[] args) {

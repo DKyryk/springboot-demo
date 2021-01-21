@@ -1,9 +1,8 @@
 package com.ercarts.springboot.demo.web.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+import com.ercarts.springboot.demo.web.data.RoomRepository;
 import com.ercarts.springboot.demo.web.model.Room;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomService {
 
-    private static final List<Room> ROOMS = IntStream.rangeClosed(1, 10)
-            .mapToObj(i -> new Room(i, "#" + i, "Room at " + i, (i + 5) + " free"))
-            .collect(Collectors.toList());
+    private final RoomRepository roomRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public List<Room> getRooms() {
-        return ROOMS;
+        return roomRepository.findAll();
     }
 }

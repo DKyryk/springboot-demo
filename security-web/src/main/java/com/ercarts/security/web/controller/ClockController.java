@@ -1,16 +1,20 @@
 package com.ercarts.security.web.controller;
 
+import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.ercarts.security.web.domain.Clock;
-import com.ercarts.security.web.error.ClockNotFoundException;
-import com.ercarts.security.web.repository.ClockRepository;
+import com.ercarts.security.web.model.ClockRegistration;
+import com.ercarts.security.web.service.ClockService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * @author dkyryk
@@ -20,25 +24,30 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ClockController {
 
-    private final ClockRepository clockRepository;
+    private final ClockService clockService;
 
-    public ClockController(ClockRepository clockRepository) {
-        this.clockRepository = clockRepository;
+    public ClockController(ClockService clockService) {
+        this.clockService = clockService;
     }
 
     @GetMapping
     public List<Clock> allClocks() {
-        return clockRepository.findAll()
-                .stream()
-                .map(Clock::fromEntity)
-                .collect(Collectors.toList());
+        return clockService.getAllClocks();
     }
 
     @GetMapping("/{id}")
     public Clock clockById(@PathVariable Long id) {
-        return clockRepository.findById(id)
-                .map(Clock::fromEntity)
-                .orElseThrow(() -> new ClockNotFoundException("Clock with id is not registered: " + id));
+        return clockService.getClock(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Clock> registerClock(@RequestBody ClockRegistration clockRegistration) {
+        Clock registeredClock = clockService.registerClock(clockRegistration);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(registeredClock.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(registeredClock);
     }
 
 }

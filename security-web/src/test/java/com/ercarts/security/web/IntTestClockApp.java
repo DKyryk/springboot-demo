@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ercarts.security.web.domain.Clock;
 import com.ercarts.security.web.domain.ClockType;
+import com.ercarts.security.web.model.ClockRegistration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,25 @@ public class IntTestClockApp {
     void absentClockNotFound() {
         ResponseEntity<Clock> response = clockClient.getClock(25);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void clockRegistered() {
+        ClockRegistration registration = new ClockRegistration();
+        registration.setColour("Purple");
+        registration.setTypeLabel("M");
+        registration.setCompany("NewBrand");
+        ResponseEntity<Clock> registrationResult = clockClient.registerClock(registration);
+        assertThat(registrationResult.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Clock registeredClock = registrationResult.getBody();
+        assertThat(registeredClock).isNotNull();
+
+        ResponseEntity<Clock> response = clockClient.getClock(registeredClock.getId());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Clock clock = response.getBody();
+        assertThat(clock).isNotNull();
+        assertThat(clock.getClockType()).isEqualTo(ClockType.MECHANICAL);
+        assertThat(clock.getCompany()).isEqualTo(registration.getCompany());
+        assertThat(clock.getColour()).isEqualTo(registration.getColour());
     }
 }

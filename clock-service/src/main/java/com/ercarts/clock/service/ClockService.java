@@ -33,7 +33,7 @@ public class ClockService {
     public Clock getClock(long id) {
         return clockRepository.findById(id)
                 .map(ClockService::buildClockFromEntity)
-                .orElseThrow(() -> new ClockNotFoundException("Clock with id is not registered: " + id));
+                .orElseThrow(() -> new ClockNotFoundException(String.format("Clock #%d is not registered", id)));
     }
 
     public Clock registerClock(ClockRegistration clockRegistration) {

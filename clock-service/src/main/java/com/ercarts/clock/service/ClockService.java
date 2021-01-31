@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.ercarts.clock.dao.ClockEntity;
 import com.ercarts.clock.domain.Clock;
 import com.ercarts.clock.domain.ClockType;
-import com.ercarts.clock.error.ClockNotFoundException;
+import com.ercarts.clock.error.ClockAppError;
 import com.ercarts.clock.model.ClockRegistration;
 import com.ercarts.clock.repository.ClockRepository;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class ClockService {
     public Clock getClock(long id) {
         return clockRepository.findById(id)
                 .map(ClockService::buildClockFromEntity)
-                .orElseThrow(() -> new ClockNotFoundException(String.format("Clock #%d is not registered", id)));
+                .orElseThrow(() -> ClockAppError.CLOCK_NOT_FOUND.toException(id));
     }
 
     public Clock registerClock(ClockRegistration clockRegistration) {

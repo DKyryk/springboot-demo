@@ -3,13 +3,14 @@ package com.ercarts.clock.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.ercarts.clock.domain.Clock;
-import com.ercarts.clock.error.ClockNotFoundException;
+import com.ercarts.clock.error.ClockAppException;
 import com.ercarts.clock.error.ErrorResponse;
 import com.ercarts.clock.model.ClockRegistration;
 import com.ercarts.clock.service.ClockService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -56,10 +57,11 @@ public class ClockController {
         return ResponseEntity.created(location).body(registeredClock);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ClockNotFoundException.class)
-    public ErrorResponse processNotFound(ClockNotFoundException e) {
-        log.error("Clock not found", e);
-        return new ErrorResponse(e.getMessage(), "CLOCK_NOT_FOUND");
+    @ExceptionHandler(ClockAppException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleException(HttpServletResponse resp, ClockAppException e) {
+        log.error("Error during processing", e);
+        resp.setStatus(e.getRawStatusCode());
+        return new ResponseEntity<>(new ErrorResponse(e.getReason(), e.getErrorCode()), e.getStatus());
     }
 }

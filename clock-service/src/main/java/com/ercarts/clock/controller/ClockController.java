@@ -28,7 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("/api/clocks")
 @Slf4j
-public class ClockController {
+public class ClockController implements ClockControllerDocumentation {
 
     private final ClockService clockService;
 
@@ -37,16 +37,19 @@ public class ClockController {
     }
 
     @GetMapping
+    @Override
     public List<Clock> allClocks() {
         return clockService.getAllClocks();
     }
 
     @GetMapping("/{id}")
+    @Override
     public Clock clockById(@PathVariable Long id) {
         return clockService.getClock(id);
     }
 
     @PostMapping
+    @Override
     public ResponseEntity<Clock> registerClock(@RequestBody ClockRegistration clockRegistration) {
         Clock registeredClock = clockService.registerClock(clockRegistration);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

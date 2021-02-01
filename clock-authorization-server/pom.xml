@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ercarts</groupId>
-    <artifactId>clock-service</artifactId>
+    <artifactId>clock-authorization-server</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -42,12 +42,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi-ui.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -80,5 +74,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
